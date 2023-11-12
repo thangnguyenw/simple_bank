@@ -1,0 +1,41 @@
+# version: "2"
+# sources:
+#   - name: mydb
+#     driver: pgx
+#     url: postgres://root:15082003Pt@localhost:5432/simple_bank
+#     queries: ./db/queries
+#     schema: ./db/migration
+
+# generates:
+#   - name: models
+#     type: go
+#     output: ./db/sqlc
+
+# version: "2"
+
+# sources:
+#   - name: db
+#     engine: pg
+#     driver: pgx
+#     url: postgres://root:15082003Pt@localhost:5432/simple_bank?sslmode=disable
+#     queries: ./db/queries
+
+# generators:
+#   - name: go
+#     source: db
+#     schema: ./db/migration
+#     output: ./db
+
+
+version: "1"
+packages:
+  - name: "db"
+    path: "./db/sqlc"
+    queries: "./db/queries/"
+    schema: "./db/migration/"
+    engine: "postgresql"
+    emit_json_tags: true
+    emit_prepared_queries: false
+    emit_interface: false
+    emit_exact_table_names: false
+
