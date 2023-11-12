@@ -54,7 +54,7 @@ type TransferTxResult struct {
 }
 
 // the second bracket mean that we're creating a new empty object of that type
-// var txKey = struct{}{}
+var txKey = struct{}{}
 
 // transferTx performs a memory transfer from one account to the other
 // it creates a transfer record, add account entries, and update accounts
@@ -90,24 +90,14 @@ func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (Trans
 			return err
 		}
 
-		account1, err := q.GetAccount(ctx, arg.FromAccountID)
-		if err != nil {
-			return err
-		}
-
-		result.FromAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
-			ID:      arg.FromAccountID,
-			Balance: account1.Balance - arg.Amount,
+		result.FromAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
+			ID:     arg.FromAccountID,
+			Amount: -arg.Amount,
 		})
 
-		account2, err := q.GetAccount(ctx, arg.ToAccountID)
-		if err != nil {
-			return err
-		}
-
-		result.ToAccount, err = q.UpdateAccount(ctx, UpdateAccountParams{
-			ID:      arg.ToAccountID,
-			Balance: arg.Amount + account2.Balance,
+		result.ToAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
+			ID:     arg.ToAccountID,
+			Amount: arg.Amount,
 		})
 		return nil
 	}) // create and run a new db transaction
