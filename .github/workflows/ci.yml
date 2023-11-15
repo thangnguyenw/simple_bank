@@ -50,7 +50,15 @@ jobs:
         sudo apt update
         sudo apt install make
         which make
-
+        
+    - name: Check for Makefile
+      run: |
+        if [ -e "Makefile" ]; then
+          echo "Makefile found in the repository."
+        else
+          echo "No Makefile found in the repository."
+        fi
+        
     - name: Run migrate
       run: make migrate_up
       
