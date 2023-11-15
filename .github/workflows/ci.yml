@@ -52,7 +52,9 @@ jobs:
         which make
 
     - name: Debug
-      run: pwd
+      run: |
+        cd ..
+        tree
         
     - name: Check for Makefile
       run: |
