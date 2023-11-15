@@ -7,10 +7,10 @@ dropdb:
 postgres_run: 
 	docker run --name postgres16 -p 5432:5432 -e POSTGRES_PASSWORD=secret -e POSTGRES_USER=root -d postgres:16-alpine
 
-migrateup: 
+migrate_up: 
 	migrate -path db/migration -database "postgresql://root:15082003Pt@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
-migratedown: 
+migrate_down: 
 	migrate -path db/migration -database "postgresql://root:15082003Pt@localhost:5432/simple_bank?sslmode=disable" -verbose down	
 
 postgres: 
@@ -26,4 +26,4 @@ server:
 	go run main.go
 
 .PHONY: 
-	createdb dropdb postgres_run postgres sqlc test server migrateup migratedown
+	createdb dropdb postgres_run postgres sqlc test server migrate_up migrate_down
