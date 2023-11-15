@@ -26,4 +26,4 @@ server:
 	go run main.go
 
 .PHONY: 
-	createdb dropdb postgres_run postgres sqlc test server
+	createdb dropdb postgres_run postgres sqlc test server migrate_up migrate_down
