@@ -53,6 +53,8 @@ jobs:
 
     - name: Debug
       run: |
+        pwd
+        cd ../..
         tree
         
     - name: Check for Makefile
